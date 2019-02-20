@@ -1,16 +1,20 @@
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public abstract class MyFileCommand implements Command {
     private static Lock read;
     private static Lock write;
-    private String fileName;
+    private FileInputStream fileIn;
+    private FileOutputStream fileOut;
 
-    public MyFileCommand(String fileName, ReentrantReadWriteLock lock){
+
+    public MyFileCommand(FileInputStream in, FileOutputStream out, ReentrantReadWriteLock lock){
         read = lock.readLock();
         write = lock.writeLock();
-        this.fileName = fileName;
-
+        fileIn = in;
+        fileOut = out;
     }
 
     @Override
